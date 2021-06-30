@@ -583,8 +583,10 @@ using SocketOptions = std::function<void(socket_t sock)>;
 inline void default_socket_options(socket_t sock) {
   int yes = 1;
 #ifdef _WIN32
+  yes = 0;
   setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, reinterpret_cast<char *>(&yes),
              sizeof(yes));
+  yes = 1;
   setsockopt(sock, SOL_SOCKET, SO_EXCLUSIVEADDRUSE,
              reinterpret_cast<char *>(&yes), sizeof(yes));
 #else
